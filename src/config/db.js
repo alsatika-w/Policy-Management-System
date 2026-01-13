@@ -11,6 +11,7 @@ console.log('DB_Password value:', process.env.DB_PASSWORD);
 console.log('DB_Password Value:', typeof process.env.DB_PASSWORD);
 console.log('DB_Host value:', process.env.DB_HOST)
 
+
 const pool = new Pool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -18,5 +19,6 @@ const pool = new Pool({
   database: process.env.DB_NAME,
   port: process.env.DB_PORT,
 });
+
 
 export default pool;

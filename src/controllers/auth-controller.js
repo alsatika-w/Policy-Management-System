@@ -28,20 +28,28 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
     const {username, password} = req.body;
 
-    const user = await findUserByUsername (username);
+    const user = await findUserByUsername(username);
     if (!user) {
-        res.status(401).json({message: 'Invalid credentials'});
+        return res.status(401).json({message: 'Invalid credentials'});
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-        res.status(401).json({message: 'Invalid credentials'});
+        return res.status(401).json({message: 'Invalid credentials'});
     }
 
     const token = jwtToken({
-        id: user.id,
+        username: user.username,
         role: user.role
     });
 
-    res.json({token})
+    // Set token as secure, httpOnly cookie
+    res.cookie('token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'Lax',
+        maxAge: 24 * 60 * 60 * 1000 // 1 day
+    });
+
+    return res.json({message: 'Login successful'});
 };
