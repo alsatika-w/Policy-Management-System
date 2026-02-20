@@ -6,10 +6,10 @@ const {Pool} = pkg;
  * Reused by all modules
  */
 
-console.log('DB_User value:', process.env.DB_USER);
-console.log('DB_Password value:', process.env.DB_PASSWORD);
-console.log('DB_Password Value:', typeof process.env.DB_PASSWORD);
-console.log('DB_Host value:', process.env.DB_HOST)
+// console.log('DB_User value:', process.env.DB_USER);
+// console.log('DB_Password value:', process.env.DB_PASSWORD);
+// console.log('DB_Password Value:', typeof process.env.DB_PASSWORD);
+// console.log('DB_Host value:', process.env.DB_HOST)
 
 
 const pool = new Pool({

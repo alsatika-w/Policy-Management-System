@@ -9,13 +9,16 @@ export const register = async (req, res) => {
         const {username, password, role} = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = await createUser (
-            username, hashedPassword, role || 'user'
+            username, hashedPassword, role || 2
         );
-        res.status(201).json(user);
+        res.status(201).json({
+            message: 'User registered successfully',
+           data: user
+        });
     }
     catch (err) {
         if (err.code == '23505') {
-            return res.status(404).json({
+            return res.status(409).json({
                 message: 'Username already exists',
             });
         }
@@ -40,7 +43,7 @@ export const login = async (req, res) => {
 
     const token = jwtToken({
         username: user.username,
-        role: user.role
+        role: user.role_id
     });
 
     // Set token as secure, httpOnly cookie
@@ -51,5 +54,13 @@ export const login = async (req, res) => {
         maxAge: 24 * 60 * 60 * 1000 // 1 day
     });
 
-    return res.json({message: 'Login successful'});
+    return res.json({
+        message: 'Login successfully',
+        token,
+        user: {
+            id: user.user_id,
+            username: user.username,
+            role: user.role_id
+        }
+    });
 };

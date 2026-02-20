@@ -4,8 +4,8 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import https from 'https';
-import httpsOptions from './config/https.js';
+// import https from 'https';
+// import httpsOptions from './config/https.js';
 import authRoutes from './routes/auth-routes.js';
 import policyRoutes from './routes/policy-routes.js';
 
@@ -35,11 +35,15 @@ app.use('/api/policies', policyRoutes);
 
 
 app.get('/', (req, res) => {
-  res.send('IT Knowledge Center API running with HTTPS');
+  res.send('IT Knowledge Center API running with HTTP');
 });
 
 const PORT = process.env.PORT || 5000;
 
-https.createServer(httpsOptions, app).listen(PORT, () => {
-  console.log(`Server is running on https://localhost:${PORT}`);
+// https.createServer(httpsOptions, app).listen(PORT, () => {
+//   console.log(`Server is running on https://localhost:${PORT}`);
+// });
+
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
